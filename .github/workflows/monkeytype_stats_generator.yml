@@ -32,4 +32,4 @@
                 target_branch: monkeytype_generate
                 build_dir: public
               env:
-                GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_MONKEYTYPE }}
+                GITHUB_TOKEN: ${{ secrets.CP_TOKEN }}
