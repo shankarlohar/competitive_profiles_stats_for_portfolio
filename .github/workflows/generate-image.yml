@@ -27,8 +27,8 @@ jobs:
 
     - name: Commit and Push
       run: |
-        git config user.name 'YourGitHubUsername'
-        git config user.email 'YourEmail@example.com'
+        git config user.name 'shankarlohar'
+        git config user.email 'shankarloharmail@gmail.com'
         git add -A
         git commit -m "Generated new image"
         git push --set-upstream https://${{ secrets.GITHUB_TOKEN }}@github.com/shankarlohar/codeforces.git image-output --force
