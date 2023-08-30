@@ -1,0 +1,35 @@
+                        
+    name: generate monkeytype stats svg
+    
+    on:
+      schedule:
+          - cron: "0 */1 * * *" # every 1 hours
+      workflow_dispatch:
+    
+    jobs:
+      download-svg:
+          runs-on: ubuntu-latest
+          steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+      
+            - name: Set up Node.js
+              uses: actions/setup-node@v3
+              with:
+                node-version: '16.x'
+      
+            - name: Download SVG
+              run: |
+                mkdir public
+                curl -o public/monkeytype-readme.svg https://monkeytype-readme.repl.co/generate-svg/shankarlohar/milkshake
+                curl -o public/monkeytype-readme-lb.svg https://monkeytype-readme.repl.co/generate-svg/shankarlohar/milkshake?lb=true
+                curl -o public/monkeytype-readme-pb.svg https://monkeytype-readme.repl.co/generate-svg/shankarlohar/milkshake?pb=true
+                curl -o public/monkeytype-readme-lb-pb.svg https://monkeytype-readme.repl.co/generate-svg/shankarlohar/milkshake?lbpb=true
+
+            - name: push monkeytype-readme.svg to the monkeytype_generate branch
+              uses: crazy-max/ghaction-github-pages@v2.5.0
+              with:
+                target_branch: monkeytype_generate
+                build_dir: public
+              env:
+                GITHUB_TOKEN: ${{ secrets.TOKEN_FOR_MONKEYTYPE }}
