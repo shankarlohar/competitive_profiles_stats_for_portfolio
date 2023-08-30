@@ -20,7 +20,8 @@ jobs:
       - name: Generate Image
         run: |
           mkdir output
-          wkhtmltoimage --javascript-delay 10000 https://codeforces-readme-stats.vercel.app/api/card?username=shankarlohar output/generated_image.png
+          wkhtmltoimage --javascript-delay 10000 https://codeforces-readme-stats.vercel.app/api/card?username=shankarlohar output/codeforces_generated.png
+          wkhtmltoimage --javascript-delay 10000 https://leetcard.jacoblin.cool/shankarlohar?ext=contest&theme=light output/leetcode_generated.png
 
       - name: Push to image-output branch
         uses: crazy-max/ghaction-github-pages@v2.5.0
