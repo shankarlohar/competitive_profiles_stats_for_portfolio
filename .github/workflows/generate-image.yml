@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        ref: 'main'  # specify the branch to checkout to, if not already on it
 
     - name: Setup Node.js
       uses: actions/setup-node@v2
@@ -37,3 +39,5 @@ jobs:
         git add -A
         git commit -m "Generate new image"
         git push origin image-output --force
+      env:
+        GITHUB_TOKEN: ${{ secrets.CODEFORCES_TOKEN }} # Make sure to name the secret key as GH_PAT in your GitHub repository settings
