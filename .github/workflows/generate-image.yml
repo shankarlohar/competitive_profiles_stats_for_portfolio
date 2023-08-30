@@ -11,19 +11,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Install wkhtmltoimage
         run: |
           sudo apt-get update -y
           sudo apt-get install -y wkhtmltopdf
 
+      - name: Create Output Directory
+        run: |
+          mkdir -p output  # Use -p to avoid errors if the directory already exists
+
       - name: Generate Codeforces Image
         run: |
-          mkdir output
           wkhtmltoimage --javascript-delay 10000 https://codeforces-readme-stats.vercel.app/api/card?username=shankarlohar output/codeforces_generated.png
+        continue-on-error: true  # Continue even if this step fails
+      
       - name: Generate Leetcode Image
         run: |  
           wkhtmltoimage --javascript-delay 10000 https://leetcard.jacoblin.cool/shankarlohar?ext=contest&theme=light output/leetcode_generated.png
+        continue-on-error: true  # Continue even if this step fails
 
       - name: Push to image-output branch
         uses: crazy-max/ghaction-github-pages@v2.5.0
