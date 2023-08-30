@@ -17,10 +17,12 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y wkhtmltopdf
 
-      - name: Generate Image
+      - name: Generate Codeforces Image
         run: |
           mkdir output
           wkhtmltoimage --javascript-delay 10000 https://codeforces-readme-stats.vercel.app/api/card?username=shankarlohar output/codeforces_generated.png
+      - name: Generate Leetcode Image
+        run: |  
           wkhtmltoimage --javascript-delay 10000 https://leetcard.jacoblin.cool/shankarlohar?ext=contest&theme=light output/leetcode_generated.png
 
       - name: Push to image-output branch
