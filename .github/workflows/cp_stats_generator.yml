@@ -1,4 +1,4 @@
-name: Generate Image and Push to Branch
+name: generate cp stats png
 
 on:
   schedule:
