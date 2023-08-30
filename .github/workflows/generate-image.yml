@@ -2,36 +2,35 @@ name: Generate Image
 
 on:
   schedule:
-      - cron: "0 */1 * * *" # every 1 hours
+    - cron: "0 */1 * * *" # Run every hour
   workflow_dispatch:
 
 jobs:
-  make-image:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-  
-        - name: Set up Node.js
-          uses: actions/setup-node@v3
-          with:
-            node-version: '16.x'
-      
-        - name: Install NPM Dependencies
-          run: npm install
-        
-        - name: Generate Image
-          run: node generate-image.js
-    
-        - name: Checkout to image-output branch
-          run: git checkout -B image-output
-          
-        - name: Commit and Push
-          run: |
-            git config user.name 'shankarlohar'
-            git config user.email 'shankarloharmail@gmail.com'
-            git add -A
-            git commit -m "Generate new image"
-            git push origin image-output --force
-          env:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install wkhtmltoimage
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y wkhtmltopdf
+
+    - name: Generate Image
+      run: |
+        wkhtmltoimage https://codeforces-readme-stats.vercel.app/api/card?username=shankarlohar generated_image.png
+
+    - name: Checkout to image-output branch
+      run: git checkout -B image-output
+
+    - name: Commit and Push
+      run: |
+        git config user.name 'YourGitHubUsername'
+        git config user.email 'YourEmail@example.com'
+        git add -A
+        git commit -m "Generated new image"
+        git push --set-upstream https://${{ secrets.GITHUB_TOKEN }}@github.com/YourGitHubUsername/YourRepoName.git image-output --force
+      env:
             GITHUB_TOKEN: ${{ secrets.CODEFORCES_TOKEN }}
