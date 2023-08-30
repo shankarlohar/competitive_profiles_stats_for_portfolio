@@ -43,7 +43,7 @@ jobs:
       - name: Push to image-output branch
         uses: crazy-max/ghaction-github-pages@v2.5.0
         with:
-          target_branch: image-output
+          target_branch: cp-stats
           build_dir: output
         env:
-          GITHUB_TOKEN: ${{ secrets.CODEFORCES_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.CP_TOKEN }}
