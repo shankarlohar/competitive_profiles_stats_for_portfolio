@@ -28,7 +28,7 @@ jobs:
       
       - name: Generate Leetcode Image
         run: |  
-          wkhtmltoimage --javascript-delay 10000 https://leetcard.jacoblin.cool/shankarlohar?ext=contest&theme=light output/leetcode_generated.png
+          wkhtmltoimage --javascript-delay 10000 https://leetcard.jacoblin.cool/shankarlohar?theme=light output/leetcode_generated.png
         continue-on-error: true  # Continue even if this step fails
 
       - name: Push to image-output branch
