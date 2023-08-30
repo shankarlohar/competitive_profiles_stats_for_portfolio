@@ -21,9 +21,6 @@
             - name: Download SVG
               run: |
                 mkdir public
-                curl -o public/monkeytype-readme.svg https://monkeytype-readme.repl.co/generate-svg/shankarlohar/milkshake
-                curl -o public/monkeytype-readme-lb.svg https://monkeytype-readme.repl.co/generate-svg/shankarlohar/milkshake?lb=true
-                curl -o public/monkeytype-readme-pb.svg https://monkeytype-readme.repl.co/generate-svg/shankarlohar/milkshake?pb=true
                 curl -o public/monkeytype-readme-lb-pb.svg https://monkeytype-readme.repl.co/generate-svg/shankarlohar/milkshake?lbpb=true
 
             - name: push monkeytype-readme.svg to the monkeytype_generate branch
