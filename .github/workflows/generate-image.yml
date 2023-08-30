@@ -25,6 +25,9 @@ jobs:
         run: |
           wkhtmltoimage --javascript-delay 10000 https://codeforces-readme-stats.vercel.app/api/card?username=shankarlohar output/codeforces_generated.png
         continue-on-error: true  # Continue even if this step fails
+
+      - name: Sleep for some time
+        run: sleep 10s
       
       - name: Generate Leetcode Image
         run: |  
