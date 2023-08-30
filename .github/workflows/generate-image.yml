@@ -1,4 +1,4 @@
-name: Generate Image
+name: Generate Image and Push to Branch
 
 on:
   schedule:
@@ -6,31 +6,26 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  generate-and-push:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Install wkhtmltoimage
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y wkhtmltopdf
 
-    - name: Install wkhtmltoimage
-      run: |
-        sudo apt-get update -y
-        sudo apt-get install -y wkhtmltopdf
+      - name: Generate Image
+        run: |
+          mkdir output
+          wkhtmltoimage https://codeforces-readme-stats.vercel.app/api/card?username=shankarlohar output/generated_image.png
 
-    - name: Generate Image
-      run: |
-        wkhtmltoimage https://codeforces-readme-stats.vercel.app/api/card?username=shankarlohar generated_image.png
-
-    - name: Checkout to image-output branch
-      run: git checkout -B image-output
-
-    - name: Commit and Push
-      run: |
-        git config user.name 'shankarlohar'
-        git config user.email 'shankarloharmail@gmail.com'
-        git add -A
-        git commit -m "Generated new image"
-        git push --set-upstream https://${{ secrets.CODEFORCES_TOKEN }}@github.com/shankarlohar/codeforces.git image-output --force
-      env:
-        CODEFORCES_TOKEN: ${{ secrets.CODEFORCES_TOKEN }}
+      - name: Push to image-output branch
+        uses: crazy-max/ghaction-github-pages@v2.5.0
+        with:
+          target_branch: image-output
+          build_dir: output
+        env:
+          GITHUB_TOKEN: ${{ secrets.CODEFORCES_TOKEN }}
